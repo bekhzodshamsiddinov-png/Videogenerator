@@ -78,17 +78,19 @@ export function topicFrom(idea: string) {
   const words = clean.split(/[.,!?;:]/)[0].split(' ')
   const lower = words.map((w) => w.toLowerCase())
   const at = lower.lastIndexOf('haqida')
+  // "Ali ismli bola" — "ismli/nomli"dan oldingi so'z ism, mavzu emas
+  const isName = (i: number) => lower[i + 1] === 'ismli' || lower[i + 1] === 'nomli'
   let picked: string[] = []
   if (at > 0) {
     for (let i = at - 1; i >= 0 && picked.length < 2; i--) {
-      if (STOP.has(lower[i])) {
+      if (STOP.has(lower[i]) || isName(i)) {
         if (picked.length) break
         continue
       }
       picked.unshift(lower[i])
     }
   }
-  if (!picked.length) picked = lower.filter((w) => !STOP.has(w)).slice(0, 2)
+  if (!picked.length) picked = lower.filter((w, i) => !STOP.has(w) && !isName(i)).slice(0, 2)
   return picked.join(' ') || "do'stlik"
 }
 

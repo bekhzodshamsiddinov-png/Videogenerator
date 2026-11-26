@@ -35,6 +35,9 @@ describe('ssenariy generatori', () => {
     expect(generateScript('x haqida', 'Multfilm', 3, c).map((s) => s.action)).toEqual(generateScript('x haqida', 'Multfilm', 3, c).map((s) => s.action))
     expect(topicFrom('Bolalar uchun halol mehnat haqida ertak')).toBe('halol mehnat')
     expect(topicFrom('')).toBe("do'stlik")
+    expect(topicFrom('Ali ismli bola haqida ertak')).toBe("do'stlik")
+    expect(topicFrom('Zarina nomli qiz va kuchukcha haqida')).toBe('kuchukcha')
+    expect(topicFrom('Ali ismli bola va mushukcha haqida halol mehnat haqida ertak')).toBe('halol mehnat')
   })
   it('narx: animatsiya qimmatroq, arzon rejim arzonroq', () => {
     expect(totalCost(3, [true, true, true, true, true])).toBeGreaterThan(totalCost(3, [false, false, false, false, false]))
